@@ -1,5 +1,5 @@
 // Naikkan angka versi ini (v6 -> v7 dst) setiap habis edit file, supaya pengunjung dapat versi terbaru.
-const CACHE_NAME = "kairo-sthana-v6";
+const CACHE_NAME = "kairo-sthana-v7";
 const APP_ASSETS = [
   "./", "./index.html", "./style.css", "./script.js", "./living-story.js",
   "./world-engine.js", "./elders.js", "./admin.js", "./config.js", "./manifest.json",

@@ -446,13 +446,12 @@
       <h2>Login <em>Circle</em></h2>
       <p class="admin-muted">Member memakai website normal. Admin mendapat panel pengelolaan.</p>
       <form id="authForm" class="admin-form">
-        <label>Username<input id="authUsername" autocomplete="username" required></label>
+        <label>Email admin<input id="authUsername" type="email" autocomplete="email" required></label>
         <label>Password<input id="authPassword" type="password" autocomplete="current-password" required></label>
         <button class="btn btn-primary" type="submit">MASUK ↗</button>
         <p id="authError" class="admin-error"></p>
       </form>
-      <div class="demo-credentials"><strong>Prototype lokal</strong><span>Admin: <code>admin</code> / <code>kairo2026</code></span><span>Member: <code>member</code> / <code>kairo123</code></span></div>
-      <p class="admin-warning">Prototype browser saja. Untuk produksi, role/password harus memakai Supabase Auth + RLS.</p>
+      <p class="admin-warning">Khusus admin. Login memakai akun Supabase.</p>
     </section>
   </div>
 
@@ -535,7 +534,7 @@
           <button id="previewSiteBtn" class="admin-tool" type="button">↗ LIHAT WEBSITE</button>
           <button id="resetAllBtn" class="admin-tool danger" type="button">↺ RESET LOKAL</button>
         </div>
-        <div class="admin-warning"><strong>Catatan:</strong> ini bukan autentikasi produksi. Saat Supabase siap, pindahkan role, akun, gallery storage, dan izin admin ke Auth + RLS.</div>
+        <div class="admin-warning"><strong>Catatan:</strong> perubahan konten disimpan di Supabase dan terlihat oleh semua pengunjung.</div>
       </div>
     </section>
   </div>
