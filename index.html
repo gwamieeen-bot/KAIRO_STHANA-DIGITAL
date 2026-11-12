@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071311" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="description" content="Kairo Sthana — Kamar Illiyyin Loro, Pondok Pesantren Darul Falah." />
+  <title>Kairo Sthana — Kamar Illiyyin Loro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+</head>
+<body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="cursor-glow"></div>
+
+  <header class="navbar">
+    <a class="brand" href="#home">
+      <span class="brand-mark logo-mark"><img src="assets/kairo-logo.png" alt="Logo Kairo" onerror="this.hidden=true;this.parentElement.classList.add('logo-fallback')" /></span>
+      <span>KAIRO <b>STHANA</b></span>
+    </a>
+    <button class="menu-btn" aria-label="Buka menu" aria-expanded="false" type="button">☰</button>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#sesepuh">Sesepuh</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#trophy-room">Trophy Room</a>
+      <a href="#talents">Talents</a>
+      <a href="#virtual-room">Room</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#circle">Circle</a>
+      <a href="#activity">Live Activity</a>
+      <a href="#chronicle">Chronicle</a>
+      <a href="#chat">Chat</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div id="announcementBar" class="announcement-bar" hidden role="status" aria-live="polite">
+    <span aria-hidden="true">✦</span>
+    <span id="announcementText"></span>
+    <button id="announcementClose" type="button" aria-label="Tutup pengumuman">×</button>
+  </div>
+
+  <main id="home">
+    <section class="hero section">
+      <div class="hero-bg"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow"><span></span> PONDOK PESANTREN DARUL FALAH</p>
+        <h1>KAIRO<br><em>STHANA</em></h1>
+        <p class="hero-subtitle">Kamar Illiyyin Loro</p>
+        <p class="hero-text">
+          Sebuah kamar legendaris yang menjadi saksi lahirnya banyak karya,
+          kompetisi, dan kemenangan.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#achievements">Lihat Prestasi <span>↗</span></a>
+          <a class="btn btn-ghost" href="#about">Kenali Kami</a>
+        </div>
+      </div>
+
+      <div class="hero-card reveal mascot-card" id="robotMascot">
+        <div class="photo-placeholder mascot-placeholder">
+          <img src="assets/timeline-robot-mascot.png" alt="Maskot robot futuristik Kairo Sthana dengan kamera" onerror="this.hidden=true;this.parentElement.classList.add('mascot-fallback')" />
+        </div>
+        <div class="mascot-chat" aria-label="Percakapan dengan maskot">
+          <div class="mascot-speech" id="mascotSpeech" role="status" aria-live="polite">
+            Halo, kawan kreatif! Aku maskot Kairo Sthana. Siap menemani kamu menjelajahi karya dan cerita kita.
+          </div>
+          <button class="mascot-talk-btn" id="mascotTalkBtn" type="button" aria-pressed="false">
+            <span aria-hidden="true">▶</span> Ajak ngobrol
+          </button>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">SCROLL <span>↓</span></div>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 01 — THE STORY</p>
+        <h2>Bukan sekadar<br><em>sebuah kamar.</em></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p class="lead">
+            <strong>Kamar Illiyyin Loro</strong> adalah tempat berkumpulnya semangat,
+            kreativitas, dan keberanian untuk terus mencoba.
+          </p>
+          <p>
+            Dari sebuah ruang sederhana di lingkungan Pondok Pesantren Darul Falah,
+            lahir cerita-cerita kompetisi dan pencapaian yang terus bertambah.
+            Website ini menjadi ruang digital untuk menyimpan perjalanan tersebut.
+          </p>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><span>01</span><strong>HOME BASE</strong><p>Pondok Pesantren Darul Falah</p></div>
+          <div class="stat"><span>02</span><strong>IDENTITY</strong><p>Kamar Illiyyin Loro</p></div>
+          <div class="stat"><span>03</span><strong>SPIRIT</strong><p>Berani berkarya, berani menang.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sesepuh" class="section elders-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> ARSIP TOKOH — PERPUSTAKAAN BIOGRAFI</p>
+        <h2>Menjaga jejak<br><em>para sesepuh.</em></h2>
+        <p class="section-note">Ruang dokumentasi perjalanan, perjuangan, dan keteladanan para sesepuh. Data profil di bawah masih berupa format contoh dan perlu dilengkapi dengan sumber yang terverifikasi.</p>
+      </div>
+      <div class="elders-toolbar reveal">
+        <label class="elders-search"><span aria-hidden="true">⌕</span><input id="elderSearch" type="search" placeholder="Cari nama sesepuh..." aria-label="Cari nama sesepuh"><kbd>⌘ K</kbd></label>
+        <span id="elderCount" class="elders-count">6 arsip contoh</span>
+      </div>
+      <div class="elders-board reveal" id="eldersBoard">
+        <div class="elder-card elder-card-1" data-elder="0"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 01</h3><span class="elder-role">Pendiri / Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 01">↗</button></div>
+        <div class="elder-card elder-card-2" data-elder="1"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 02</h3><span class="elder-role">Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 02">↗</button></div>
+        <div class="elder-card elder-card-3" data-elder="2"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 03</h3><span class="elder-role">Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 03">↗</button></div>
+        <div class="elder-card elder-card-4" data-elder="3"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 04</h3><span class="elder-role">Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 04">↗</button></div>
+        <div class="elder-card elder-card-5" data-elder="4"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 05</h3><span class="elder-role">Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 05">↗</button></div>
+        <div class="elder-card elder-card-6" data-elder="5"><span class="pin"></span><div class="elder-avatar">KS</div><div class="elder-card-copy"><h3>Nama Sesepuh 06</h3><span class="elder-role">Pengasuh</span><p><b>Lahir</b><span>—</span></p><p><b>Wafat</b><span>—</span></p><p><b>Periode</b><span>—</span></p></div><button class="elder-open" aria-label="Buka biografi Nama Sesepuh 06">↗</button></div>
+        <div class="elder-feature"><div class="elder-feature-frame"><div class="elder-feature-monogram">KS</div></div><p class="elder-feature-label">ARSIP TOKOH</p><h3>Warisan<br><em>keteladanan.</em></h3><p class="elder-feature-desc">Kenali sosok, perjalanan, dan nilai yang diwariskan.</p><span class="elder-feature-line"></span></div>
+        <svg class="elder-strings" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true"><path d="M175 65 L500 175 L825 65 M175 280 L500 280 L825 280 M175 495 L500 385 L825 495"/><path d="M175 65 L175 280 L175 495 M825 65 L825 280 L825 495"/></svg>
+        <p id="elderNoResults" class="elder-no-results" hidden>Tidak ada arsip yang cocok dengan pencarianmu.</p>
+      </div>
+      <p class="elders-footnote">✦ Arsip biografi akan dilengkapi berdasarkan data dan dokumentasi resmi.</p>
+    </section>
+
+    <div id="elderModal" class="elder-modal" hidden aria-modal="true" role="dialog" aria-labelledby="elderModalName">
+      <div class="elder-modal-backdrop" data-close-elder></div>
+      <article class="elder-detail">
+        <button class="elder-detail-close" type="button" data-close-elder aria-label="Tutup">×</button>
+        <div class="elder-detail-top"><div id="elderModalAvatar" class="elder-detail-avatar">KS</div><div><p class="eyebrow"><span></span> ARSIP BIOGRAFI</p><h2 id="elderModalName">Nama Sesepuh</h2><p id="elderModalRole" class="elder-role">Pengasuh</p></div></div>
+        <div class="elder-detail-tabs" role="tablist"><button class="active" data-elder-tab="bio" role="tab">Biografi</button><button data-elder-tab="edu" role="tab">Pendidikan</button><button data-elder-tab="contrib" role="tab">Peran &amp; Kontribusi</button><button data-elder-tab="legacy" role="tab">Warisan</button></div>
+        <div id="elderModalBody" class="elder-detail-body">Data biografi belum ditambahkan.</div>
+        <div class="elder-detail-facts"><span><b>Lahir</b><i id="elderModalBorn">—</i></span><span><b>Wafat</b><i id="elderModalDied">—</i></span><span><b>Periode</b><i id="elderModalPeriod">—</i></span></div>
+      </article>
+    </div>
+
+    <section class="quote-section section reveal" aria-label="Quote Kairo Sthana">
+      <div class="quote-mark">“</div>
+      <p class="quote-text">Sak joosseh</p>
+      <div class="quote-line"></div>
+      <div class="quote-mark end">”</div>
+    </section>
+
+    <section id="achievements" class="section achievements">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 02 — HALL OF FAME</p>
+        <h2>Jejak yang<br><em>pernah dimenangkan.</em></h2>
+        <p class="section-note">Data di bawah adalah placeholder. Ganti dengan prestasi aslimu.</p>
+      </div>
+
+      <div class="trophy-grid">
+        <article class="trophy reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
+          <span class="number">01</span>
+          <div class="trophy-icon">🏆</div>
+          <h3>Juara 1</h3>
+          <p>Nama Lomba / Kompetisi</p>
+          <small>2026 · Placeholder</small>
+        </article>
+        <article class="trophy featured reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
+          <span class="number">02</span>
+          <div class="trophy-icon">🥇</div>
+          <h3>Juara 2</h3>
+          <p>Nama Lomba / Kompetisi</p>
+          <small>2026 · Placeholder</small>
+        </article>
+        <article class="trophy reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
+          <span class="number">03</span>
+          <div class="trophy-icon">🏅</div>
+          <h3>Finalis</h3>
+          <p>Nama Lomba / Kompetisi</p>
+          <small>2026 · Placeholder</small>
+        </article>
+      </div>
+      <div class="more-achievements reveal">
+        <span>BANYAK CERITA MASIH AKAN DITAMBAHKAN</span>
+        <span>✦</span>
+      </div>
+    </section>
+
+    <section id="talents" class="section talents">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 03 — TALENTS</p>
+        <h2>One room.<br><em>Many talents.</em></h2>
+      </div>
+      <div class="talent-list reveal">
+        <div class="talent-item interactive-card" tabindex="0" role="button" data-interactive="talent"><span>01</span><h3>Creative</h3><p>Kreativitas</p><b>↗</b></div>
+        <div class="talent-item interactive-card" tabindex="0" role="button" data-interactive="talent"><span>02</span><h3>Competition</h3><p>Kompetisi</p><b>↗</b></div>
+        <div class="talent-item interactive-card" tabindex="0" role="button" data-interactive="talent"><span>03</span><h3>Multitalent</h3><p>Beragam kemampuan</p><b>↗</b></div>
+        <div class="talent-item interactive-card" tabindex="0" role="button" data-interactive="talent"><span>04</span><h3>Teamwork</h3><p>Kolaborasi</p><b>↗</b></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section gallery">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 04 — GALLERY</p>
+        <h2>Moments<br><em>worth remembering.</em></h2>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-box large interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 01</span><small>Dokumentasi lomba</small></div>
+        <div class="gallery-box interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 02</span><small>Piala & prestasi</small></div>
+        <div class="gallery-box interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 03</span><small>Kegiatan</small></div>
+        <div class="gallery-box wide interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 04</span><small>Coming soon</small></div>
+      </div>
+    </section>
+
+
+    <section id="timeline" class="section timeline-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 05 — THE CHRONICLE</p>
+        <h2>Jejak yang<br><em>terus berjalan.</em></h2>
+        <p class="section-note">Timeline digital KAIRO. Isi tahun dan ceritanya bisa dikembangkan dari dashboard admin.</p>
+      </div>
+      <div class="timeline-wrap reveal" id="kairoTimeline">
+        <div class="timeline-line"></div>
+        <article class="timeline-node is-active" tabindex="0" data-timeline="0"><span class="timeline-year">AWAL</span><div><h3>Rumah Pertama</h3><p>Kamar Illiyyin Loro menjadi ruang tumbuh, belajar, dan berkarya bersama.</p></div><b>↗</b></article>
+        <article class="timeline-node" tabindex="0" data-timeline="1"><span class="timeline-year">PROSES</span><div><h3>Mulai Berkompetisi</h3><p>Semangat mencoba membawa nama KAIRO masuk ke berbagai kegiatan dan lomba.</p></div><b>↗</b></article>
+        <article class="timeline-node" tabindex="0" data-timeline="2"><span class="timeline-year">KARYA</span><div><h3>Banyak Talenta</h3><p>Beragam kemampuan penghuni kamar mulai menjadi cerita yang dikumpulkan.</p></div><b>↗</b></article>
+        <article class="timeline-node" tabindex="0" data-timeline="3"><span class="timeline-year">SEKARANG</span><div><h3>Digital Home</h3><p>KAIRO punya ruang digital untuk menyimpan prestasi, kenangan, dan aktivitas.</p></div><b>↗</b></article>
+      </div>
+    </section>
+
+    <section id="trophy-room" class="section trophy-room-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 06 — TROPHY ROOM</p>
+        <h2>Masuk ke ruang<br><em>para pemenang.</em></h2>
+      </div>
+      <div class="trophy-room reveal">
+        <div class="trophy-shelf shelf-top"><button class="trophy-display" data-trophy="gold" type="button"><span>🏆</span><small>GOLD ARCHIVE</small></button><button class="trophy-display" data-trophy="silver" type="button"><span>🥇</span><small>VICTORY FILE</small></button><button class="trophy-display" data-trophy="legacy" type="button"><span>🏅</span><small>LEGACY</small></button></div>
+        <div class="trophy-room-copy"><span class="room-code">KS / 001</span><h3>Setiap piala punya<br><em>cerita.</em></h3><p>Klik salah satu arsip untuk membuka detail. Data prestasi bisa diganti dari panel admin.</p><button id="celebrateTrophyBtn" class="btn btn-primary" type="button">RAYAKAN PRESTASI ✦</button></div>
+        <div class="trophy-shelf shelf-bottom"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <section id="virtual-room" class="section virtual-room-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 07 — VIRTUAL ROOM</p>
+        <h2>Selamat datang di<br><em>markas KAIRO.</em></h2>
+        <p class="section-note">Eksplorasi mini kamar digital. Klik titik yang menyala untuk melihat cerita.</p>
+      </div>
+      <div class="virtual-room reveal" id="virtualRoom">
+        <div class="room-ceiling"></div><div class="room-back"></div><div class="room-floor"></div>
+        <div class="room-bed"><span>ILLiyyIN</span></div><div class="room-desk"><span>CREATIVE DESK</span></div><div class="room-trophy-cabinet"><span>🏆</span><small>TROPHY</small></div><div class="room-window"><i></i><i></i><i></i></div>
+        <button class="room-hotspot hot-1" data-room="bed" type="button" aria-label="Lihat area tempat istirahat">+</button>
+        <button class="room-hotspot hot-2" data-room="desk" type="button" aria-label="Lihat meja karya">+</button>
+        <button class="room-hotspot hot-3" data-room="trophy" type="button" aria-label="Lihat lemari prestasi">+</button>
+        <button class="room-hotspot hot-4" data-room="window" type="button" aria-label="Lihat jendela kamar">+</button>
+        <div class="room-hud"><span>VIRTUAL TOUR</span><strong>KAIRO / ILLIYYIN LORO</strong><small>4 interactive points</small></div>
+      </div>
+    </section>
+
+    <section id="circle" class="section circle-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 08 — KAIRO CIRCLE</p>
+        <h2>Kenalan dengan<br><em>penghuninya.</em></h2>
+      </div>
+      <div class="circle-grid reveal">
+        <div class="member-random-card">
+          <div class="member-orbit"><span id="randomMemberAvatar">KS</span></div>
+          <span class="eyebrow compact"><span></span> RANDOM MEMBER</span>
+          <h3 id="randomMemberName">Kairo Sthana</h3>
+          <p id="randomMemberRole">Penghuni circle</p>
+          <button id="randomMemberBtn" class="btn btn-primary" type="button">KENALAN ✦</button>
+        </div>
+        <div class="progress-card">
+          <div class="progress-head"><span>YOUR KAIRO XP</span><strong id="kairoXP">0 XP</strong></div>
+          <div class="xp-track"><i id="xpFill"></i></div>
+          <p id="xpLevel">Level 1 · New Arrival</p>
+          <div class="achievement-badges" id="achievementBadges"></div>
+          <button id="unlockAchievementBtn" class="btn btn-ghost" type="button">CEK ACHIEVEMENT</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="activity" class="section activity-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 09 — LIVE ACTIVITY</p>
+        <h2>Markas yang<br><em>terus bergerak.</em></h2>
+      </div>
+      <div class="activity-feed reveal" id="activityFeed"></div>
+    </section>
+
+    <section id="chat" class="section chat-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 10 — CIRCLE CHAT</p>
+        <h2>Satu ruang.<br><em>Banyak cerita.</em></h2>
+        <p class="section-note">Circle chat realtime untuk teman-teman Kairo Sthana. Bisa dipakai dari HP maupun laptop selama terhubung internet.</p>
+      </div>
+
+      <div class="chat-panel reveal">
+        <div class="chat-status">
+          <span class="status-dot"></span>
+          <span id="chatConnectionLabel">CONNECTING...</span>
+          <span class="chat-room-tag">✦ CIRCLE ILLIYYIN</span>
+          <span id="chatConnectionHint" class="chat-connection-hint">Menyiapkan koneksi...</span>
+        </div>
+        <div id="chatMessages" class="chat-messages" aria-live="polite">
+          <div class="chat-empty">Belum ada pesan. Jadilah yang pertama 👋</div>
+        </div>
+        <form id="chatForm" class="chat-form">
+          <input id="chatName" type="text" maxlength="20" placeholder="Nama" autocomplete="nickname" required />
+          <input id="chatMessage" type="text" maxlength="200" placeholder="Tulis pesan untuk circle..." autocomplete="off" required />
+          <button class="btn btn-primary" type="submit">Kirim ↗</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="chronicle" class="section living-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 11 — LIVING CHRONICLE</p>
+        <h2>KAIRO tidak<br><em>berhenti bercerita.</em></h2>
+        <p class="section-note">Kejadian kecil yang benar-benar terjadi dapat menjadi bagian dari ingatan KAIRO. Penghuni mengirim moment, admin memvalidasi, lalu KAIRO menyimpannya sebagai sejarah.</p>
+      </div>
+      <div class="living-status reveal">
+        <div><span class="status-dot"></span><strong id="livingStatus">KAIRO IS LISTENING</strong><small id="livingStatusHint">Memory engine siap menerima cerita.</small></div>
+        <div class="living-stats">
+          <span><b id="memoryCount">0</b><small>MEMORIES</small></span>
+          <span><b id="eventCount">0</b><small>EVENTS</small></span>
+          <span><b id="chapterCount">0</b><small>CHAPTERS</small></span>
+        </div>
+      </div>
+      <div class="chronicle-layout reveal">
+        <div class="chronicle-feed" id="chronicleFeed"><div class="chronicle-empty">Belum ada memory. KAIRO sedang menunggu cerita pertama.</div></div>
+        <aside class="memory-submit">
+          <p class="eyebrow"><span></span> FOR RESIDENTS</p>
+          <h3>Tambahkan <em>moment.</em></h3>
+          <p>Contoh: “Tadi gw jatoh depan kamar.” Sesederhana itu. Admin akan memvalidasi sebelum masuk ke sejarah KAIRO.</p>
+          <form id="memoryForm">
+            <input id="memoryAuthor" maxlength="40" placeholder="Nama penghuni" required>
+            <select id="memoryType"><option value="moment">Moment</option><option value="event">Event</option><option value="milestone">Milestone</option></select>
+            <input id="memoryTitle" maxlength="80" placeholder="Judul singkat" required>
+            <textarea id="memoryStory" maxlength="500" rows="6" placeholder="Apa yang terjadi?" required></textarea>
+            <button class="btn btn-primary" type="submit">KIRIM KE KAIRO ↗</button>
+            <small class="memory-form-note">Cerita masuk sebagai <b>pending</b> dan belum tampil publik sampai divalidasi admin.</small>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section id="world" class="section living-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> 12 — KAIRO WORLD STATE</p>
+        <h2>Dunia yang<br><em>terus berjalan.</em></h2>
+        <p class="section-note">KAIRO membaca waktu, memory tervalidasi, dan aktivitas terbaru untuk menentukan keadaan dunianya. Ia berubah karena data nyata, bukan karena cerita yang dikarang.</p>
+      </div>
+      <div class="world-state-grid reveal">
+        <article class="world-state-main"><span class="state-kicker">CURRENT PHASE</span><strong id="worldPhase">AWAKENING</strong><p id="worldVoice">KAIRO sedang menyelaraskan dunia...</p><div class="state-bars"><div><span>ACTIVITY</span><b id="worldActivity">0%</b><i><em id="worldActivityBar"></em></i></div><div><span>ENERGY</span><b id="worldEnergy">50%</b><i><em id="worldEnergyBar"></em></i></div></div></article>
+        <div class="world-state-cards"><article><small>MOOD</small><strong id="worldMood">QUIET</strong></article><article><small>DAY PHASE</small><strong id="worldDay">—</strong></article><article><small>SEASON</small><strong id="worldSeason">ORIGIN</strong></article><article><small>DAYS ALIVE</small><strong id="worldDays">0</strong></article></div>
+      </div>
+      <div class="core-panel reveal"><div><p class="eyebrow"><span></span> KAIRO CORE</p><h3>“Aku masih di sini.”</h3><p id="coreVoice">Core sedang menunggu sinkronisasi pertama.</p></div><div class="core-signals" id="coreSignals"></div></div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="contact-inner reveal">
+        <p class="eyebrow"><span></span> 13 — CONNECT</p>
+        <h2>Follow the<br><em>journey.</em></h2>
+        <p>Perjalanan Kairo Sthana dan Kamar Illiyyin Loro masih terus berjalan.</p>
+        <a class="instagram" href="https://instagram.com/kairo_sthana" target="_blank" rel="noopener">
+          <span>Instagram</span>
+          <strong>@kairo_sthana</strong>
+          <b>↗</b>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><span class="brand-mark small logo-mark"><img src="assets/kairo-logo.png" alt="Logo Kairo" onerror="this.hidden=true;this.parentElement.classList.add('logo-fallback')" /></span> KAIRO STHANA</div>
+    <p>© 2026 · Kamar Illiyyin Loro · Darul Falah</p>
+    <div class="footer-actions">
+      <button id="authOpenBtn" class="footer-admin-btn" type="button">LOGIN</button>
+      <button id="adminOpenBtn" class="footer-admin-btn" type="button" hidden>👑 ADMIN</button>
+      <a class="footer-admin-btn" href="kairo-admin.html">🧬 STORY ADMIN</a>
+      <button id="logoutBtn" class="footer-admin-btn" type="button" hidden>LOGOUT</button>
+      <a href="#home">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+
+  <div id="interactiveModal" class="interactive-modal" hidden aria-modal="true" role="dialog" aria-labelledby="interactiveModalTitle">
+    <div class="interactive-backdrop" data-close-interactive></div>
+    <article class="interactive-dialog">
+      <button class="interactive-close" type="button" data-close-interactive aria-label="Tutup">×</button>
+      <div id="interactiveModalVisual" class="interactive-visual" hidden></div>
+      <p class="eyebrow"><span></span> KAIRO STHANA</p>
+      <h2 id="interactiveModalTitle">Detail</h2>
+      <p id="interactiveModalBody" class="interactive-body"></p>
+    </article>
+  </div>
+
+
+  <button id="kairoPulseBtn" class="kairo-pulse-btn" type="button" aria-label="Buka KAIRO Pulse">◉ PULSE</button>
+  <button id="kairoHubBtn" class="kairo-hub-btn" type="button" aria-label="Buka KAIRO Hub">✦ HUB</button>
+  <div id="kairoHub" class="hub-modal" hidden aria-modal="true" role="dialog" aria-labelledby="hubTitle">
+    <div class="hub-backdrop" data-close-hub></div>
+    <section class="hub-dialog">
+      <button class="hub-close" data-close-hub type="button" aria-label="Tutup">×</button>
+      <p class="eyebrow"><span></span> KAIRO DIGITAL HOME</p>
+      <h2 id="hubTitle">Control <em>Hub.</em></h2>
+      <div class="hub-tabs" role="tablist">
+        <button class="hub-tab active" data-hubtab="explore" type="button">EXPLORE</button>
+        <button class="hub-tab" data-hubtab="community" type="button">COMMUNITY</button>
+        <button class="hub-tab" data-hubtab="tools" type="button">TOOLS</button>
+      </div>
+      <div class="hub-pane active" data-hubpane="explore">
+        <div class="hub-grid">
+          <button class="hub-card" data-hubaction="search" type="button"><b>⌕</b><strong>Search KAIRO</strong><small>Cari isi website dalam satu tempat.</small></button>
+          <button class="hub-card" data-hubaction="agenda" type="button"><b>◷</b><strong>Agenda</strong><small>Lihat dan tambah kegiatan.</small></button>
+          <button class="hub-card" data-hubaction="stats" type="button"><b>▦</b><strong>Live Stats</strong><small>Statistik dihitung dari data yang tersedia.</small></button>
+          <button class="hub-card" data-hubaction="profiles" type="button"><b>◎</b><strong>Member Profiles</strong><small>Jelajah profil penghuni circle.</small></button>
+        </div>
+      </div>
+      <div class="hub-pane" data-hubpane="community" hidden>
+        <div class="hub-grid">
+          <button class="hub-card" data-hubaction="guestbook" type="button"><b>✎</b><strong>Guestbook</strong><small>Tinggalkan pesan untuk KAIRO.</small></button>
+          <button class="hub-card" data-hubaction="reactions" type="button"><b>♥</b><strong>Reaction Wall</strong><small>Kasih reaksi ke cerita yang lu suka.</small></button>
+          <button class="hub-card" data-hubaction="broadcast" type="button"><b>!</b><strong>Broadcast</strong><small>Pengumuman yang tersimpan di browser.</small></button>
+          <button class="hub-card" data-hubaction="notifications" type="button"><b>♢</b><strong>Notifications</strong><small>Lihat aktivitas penting yang terlewat.</small></button>
+        </div>
+      </div>
+      <div class="hub-pane" data-hubpane="tools" hidden>
+        <div class="hub-grid">
+          <button class="hub-card" data-hubaction="share" type="button"><b>↗</b><strong>Share Card</strong><small>Buat kartu teks untuk dibagikan.</small></button>
+          <button class="hub-card" data-hubaction="ambient" type="button"><b>≈</b><strong>Ambient Mode</strong><small>Mode ambience interaktif, bisa dimatikan kapan saja.</small></button>
+          <button class="hub-card" data-hubaction="achievements" type="button"><b>🏅</b><strong>Achievement Cabinet</strong><small>Semua badge dan progres lu.</small></button>
+          <button class="hub-card" data-hubaction="memory" type="button"><b>◫</b><strong>Memory Wall</strong><small>Buka gallery dengan lightbox.</small></button>
+        </div>
+      </div>
+      <div id="hubOutput" class="hub-output" aria-live="polite"></div>
+    </section>
+  </div>
+  <div id="kairoToast" class="kairo-toast" role="status" aria-live="polite" hidden></div>
+
+  <div id="authModal" class="admin-modal" hidden>
+    <div class="admin-backdrop" data-close-auth></div>
+    <section class="admin-dialog auth-dialog">
+      <button class="admin-close" data-close-auth type="button">×</button>
+      <p class="eyebrow"><span></span> KAIRO ACCESS</p>
+      <h2>Login <em>Circle</em></h2>
+      <p class="admin-muted">Member memakai website normal. Admin mendapat panel pengelolaan.</p>
+      <form id="authForm" class="admin-form">
+        <label>Username<input id="authUsername" autocomplete="username" required></label>
+        <label>Password<input id="authPassword" type="password" autocomplete="current-password" required></label>
+        <button class="btn btn-primary" type="submit">MASUK ↗</button>
+        <p id="authError" class="admin-error"></p>
+      </form>
+      <div class="demo-credentials"><strong>Prototype lokal</strong><span>Admin: <code>admin</code> / <code>kairo2026</code></span><span>Member: <code>member</code> / <code>kairo123</code></span></div>
+      <p class="admin-warning">Prototype browser saja. Untuk produksi, role/password harus memakai Supabase Auth + RLS.</p>
+    </section>
+  </div>
+
+  <div id="adminModal" class="admin-modal" hidden>
+    <div class="admin-backdrop" data-close-admin></div>
+    <section class="admin-dialog admin-dashboard">
+      <button class="admin-close" data-close-admin type="button">×</button>
+      <p class="eyebrow"><span></span> 👑 ADMIN MODE</p>
+      <h2>Kairo <em>Dashboard</em></h2>
+      <p class="admin-muted">Desain asli tetap dipakai. Perubahan prototype tersimpan di browser ini.</p>
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="content">Konten</button>
+        <button class="admin-tab" data-tab="achievements">Prestasi</button>
+        <button class="admin-tab" data-tab="gallery">Gallery</button>
+        <button class="admin-tab" data-tab="members">Member</button>
+        <button class="admin-tab" data-tab="living">Living Story</button>
+        <button class="admin-tab" data-tab="tools">Tools</button>
+      </div>
+
+      <div class="admin-pane active" data-pane="content">
+        <form id="contentForm" class="admin-grid-form">
+          <label>Hero subtitle<input name="heroSubtitle"></label>
+          <label>Instagram<input name="instagram"></label>
+          <label class="full">Hero description<textarea name="heroText" rows="3"></textarea></label>
+          <label class="full">About lead<textarea name="aboutLead" rows="3"></textarea></label>
+          <label class="full">About body<textarea name="aboutBody" rows="4"></textarea></label>
+          <label>Quote<input name="quoteText"></label>
+          <label>Pengumuman<input name="announcement" placeholder="Info singkat"></label>
+          <div class="admin-actions full"><button class="btn btn-primary">SIMPAN KONTEN ↗</button><button id="resetContentBtn" class="btn btn-ghost" type="button">RESET</button></div>
+        </form>
+      </div>
+
+      <div class="admin-pane" data-pane="achievements">
+        <form id="achievementForm" class="admin-stack-form">
+          <p class="admin-note">Edit tiga kartu prestasi yang sudah ada.</p>
+          <div class="admin-card-grid">
+            <fieldset><legend>01</legend><input name="a1t" placeholder="Judul"><input name="a1n" placeholder="Nama lomba"><input name="a1m" placeholder="Tahun · keterangan"></fieldset>
+            <fieldset><legend>02</legend><input name="a2t" placeholder="Judul"><input name="a2n" placeholder="Nama lomba"><input name="a2m" placeholder="Tahun · keterangan"></fieldset>
+            <fieldset><legend>03</legend><input name="a3t" placeholder="Judul"><input name="a3n" placeholder="Nama lomba"><input name="a3m" placeholder="Tahun · keterangan"></fieldset>
+          </div>
+          <button class="btn btn-primary">SIMPAN PRESTASI ↗</button>
+        </form>
+      </div>
+
+      <div class="admin-pane" data-pane="gallery">
+        <form id="galleryForm" class="admin-stack-form">
+          <p class="admin-note">Masukkan URL gambar publik untuk mengisi kotak gallery.</p>
+          <div class="admin-card-grid">
+            <fieldset><legend>01</legend><input name="g1u" placeholder="https://..."><input name="g1c" placeholder="Caption"></fieldset>
+            <fieldset><legend>02</legend><input name="g2u" placeholder="https://..."><input name="g2c" placeholder="Caption"></fieldset>
+            <fieldset><legend>03</legend><input name="g3u" placeholder="https://..."><input name="g3c" placeholder="Caption"></fieldset>
+            <fieldset><legend>04</legend><input name="g4u" placeholder="https://..."><input name="g4c" placeholder="Caption"></fieldset>
+          </div>
+          <button class="btn btn-primary">SIMPAN GALLERY ↗</button>
+        </form>
+      </div>
+
+      <div class="admin-pane" data-pane="members">
+        <form id="memberForm" class="admin-stack-form">
+          <label>Daftar member, satu nama per baris<textarea name="members" rows="8"></textarea></label>
+          <button class="btn btn-primary">SIMPAN MEMBER ↗</button>
+        </form>
+        <div id="memberPreview" class="member-preview"></div>
+      </div>
+
+      <div class="admin-pane" data-pane="living">
+        <p class="admin-note">Moderasi Living Story berjalan langsung di browser ini. Tidak perlu server, npm, atau backend untuk versi lokal.</p>
+        <div class="admin-grid-form">
+          <div class="metric"><b id="livingAdminTotal">0</b><small>PUBLIC MEMORIES</small></div>
+          <div class="metric"><b id="livingAdminPending">0</b><small>PENDING</small></div>
+          <div class="metric"><b id="livingAdminEvents">0</b><small>EVENTS</small></div>
+          <div class="metric"><b id="livingAdminChapters">0</b><small>CHAPTERS</small></div>
+        </div>
+        <div id="livingAdminInbox" class="admin-stack-form"></div>
+      </div>
+
+      <div class="admin-pane" data-pane="tools">
+        <div class="tool-grid">
+          <button id="exportDataBtn" class="admin-tool" type="button">⇩ EXPORT DATA</button>
+          <button id="previewSiteBtn" class="admin-tool" type="button">↗ LIHAT WEBSITE</button>
+          <button id="resetAllBtn" class="admin-tool danger" type="button">↺ RESET LOKAL</button>
+        </div>
+        <div class="admin-warning"><strong>Catatan:</strong> ini bukan autentikasi produksi. Saat Supabase siap, pindahkan role, akun, gallery storage, dan izin admin ke Auth + RLS.</div>
+      </div>
+    </section>
+  </div>
+
+
+  <div id="secretRoom" class="secret-room" hidden aria-modal="true" role="dialog" aria-labelledby="secretRoomTitle">
+    <div class="secret-backdrop" data-close-secret></div>
+    <article class="secret-dialog">
+      <button class="interactive-close" type="button" data-close-secret aria-label="Tutup">×</button>
+      <span class="eyebrow"><span></span> SECRET ACCESS</span>
+      <div class="secret-symbol">✦</div>
+      <h2 id="secretRoomTitle">KAIRO <em>SECRET ROOM</em></h2>
+      <p>Lu nemuin ruang rahasia. Ini easter egg kecil buat orang yang benar-benar memperhatikan detail website.</p>
+      <div class="secret-code">KAIRO / ILLIYYIN / STHANA</div>
+      <button id="secretCelebrateBtn" class="btn btn-primary" type="button">BUKA RAHASIA ✦</button>
+    </article>
+  </div>
+
+
+  <!-- ===== KAIRO BARBAR PACK ===== -->
+  <section id="kairoUniverse" class="barbar-section section">
+    <div class="section-heading reveal">
+      <p class="eyebrow"><span></span> KAIRO UNIVERSE — BARBAR MODE</p>
+      <h2>Satu website.<br><em>Satu semesta.</em></h2>
+      <p class="section-note">Semua ruang di bawah benar-benar interaktif. Jelajahi, temukan clue, dan buka KAIRO CORE.</p>
+    </div>
+    <div class="command-center">
+      <div><span class="live-dot"></span><b>KAIRO NETWORK</b><small>COMMAND CENTER · ONLINE</small></div>
+      <div class="command-clock" id="commandClock">--:--:--</div>
+      <button id="nightModeBtn" class="barbar-btn" type="button">🌙 NIGHT ARCHIVE</button>
+    </div>
+
+    <div class="world-wrap" id="kairoWorld">
+      <div class="world-grid"></div>
+      <div class="world-core"><span>KS</span><small>KAIRO CORE</small></div>
+      <button class="world-node node-markaz" data-room="markaz" data-title="Markaz" data-target="#home" type="button"><b>⌂</b><strong>MARKAZ</strong><small>Home Base</small></button>
+      <button class="world-node node-trophy" data-room="trophy" data-title="Trophy Room" data-target="#trophy-room" type="button"><b>🏆</b><strong>TROPHY</strong><small>Hall of Fame</small></button>
+      <button class="world-node node-archive" data-room="archive" data-title="Archive" data-target="#timeline" type="button"><b>◈</b><strong>ARCHIVE</strong><small>Chronicle</small></button>
+      <button class="world-node node-circle" data-room="circle" data-title="Circle" data-target="#circle" type="button"><b>◎</b><strong>CIRCLE</strong><small>People</small></button>
+      <button class="world-node node-gallery" data-room="gallery" data-title="Memory Wall" data-target="#gallery" type="button"><b>▧</b><strong>MEMORY</strong><small>Gallery</small></button>
+      <button class="world-node node-terminal" data-room="terminal" data-title="Terminal" data-target="#kairoTerminal" type="button"><b>⌘</b><strong>TERMINAL</strong><small>System</small></button>
+      <button class="world-node node-secret" data-room="secret" data-title="Secret Room" data-target="#secretRoom" type="button"><b>✦</b><strong>SECRET</strong><small>Hidden</small></button>
+      <button class="world-node node-core" data-room="core" data-title="KAIRO Core" data-target="#kairoUniverse" type="button"><b>🧬</b><strong>CORE</strong><small>Locked</small></button>
+      <div class="world-orbit orbit-a"></div><div class="world-orbit orbit-b"></div>
+    </div>
+    <div class="world-footer"><span id="worldCount">0/8 RUANG TERJELAJAH</span><span>CLUES <b id="questProgress">0/5 CLUES</b></span><span>STATUS <b>ONLINE</b></span></div>
+
+    <div class="barbar-grid">
+      <button class="barbar-card" id="dnaBtn" type="button"><span>🧬</span><strong>KAIRO DNA</strong><small>Jejak eksplorasi pribadi lu.</small></button>
+      <button class="barbar-card" id="mirrorBtn" type="button"><span>🪞</span><strong>THE MIRROR</strong><small>Lihat rekam perjalanan sesi lu.</small></button>
+      <button class="barbar-card" id="terminalOpenBtn" type="button"><span>⌘</span><strong>KAIRO TERMINAL</strong><small>Command line rahasia yang benar-benar jalan.</small></button>
+      <button class="barbar-card" data-clue="markaz" type="button"><span>🕵️</span><strong>CLUE: MARKAZ</strong><small>Mulai rantai ARG.</small></button>
+      <button class="barbar-card" data-clue="trophy" type="button"><span>🏆</span><strong>CLUE: TROPHY</strong><small>Cari petunjuk berikutnya.</small></button>
+      <button class="barbar-card" data-clue="archive" type="button"><span>📜</span><strong>CLUE: ARCHIVE</strong><small>Sejarah menyimpan kode.</small></button>
+      <button class="barbar-card" data-clue="terminal" type="button"><span>💻</span><strong>CLUE: TERMINAL</strong><small>Command tertentu membuka jalan.</small></button>
+      <button class="barbar-card" data-clue="core" type="button"><span>🔐</span><strong>CLUE: CORE</strong><small>Clue terakhir membuka inti.</small></button>
+    </div>
+  </section>
+
+  <div id="mascotAiModal" class="barbar-modal" hidden>
+    <div class="barbar-backdrop" data-close-mascot></div>
+    <section class="barbar-dialog mascot-ai-dialog">
+      <button class="barbar-close" data-close-mascot type="button">×</button>
+      <div class="mascot-ai-head"><img src="assets/timeline-robot-mascot.png" alt="Maskot KAIRO"><div><p class="eyebrow"><span></span> KAIRO MASCOT AI</p><h2>Gue <em>ngoceh.</em></h2><small>Local AI personality · optional real AI backend · voice enabled</small></div></div>
+      <div id="mascotAiLog" class="mascot-ai-log"></div>
+      <form id="mascotAiForm" class="mascot-ai-form"><input id="mascotAiInput" maxlength="180" placeholder="Tanya apa aja ke maskot..." autocomplete="off"><button type="submit" class="btn btn-primary">KIRIM ↗</button></form>
+      <div class="mascot-ai-controls"><button id="mascotAutoToggle" type="button">AUTO TALK: ON</button><button id="mascotVoiceToggle" type="button">VOICE: ON</button><button id="mascotRealAiBtn" type="button">⚡ REAL AI</button></div>
+      <p class="ai-note">Mode lokal tetap jalan tanpa API. Tombol REAL AI baru aktif kalau lu menghubungkan backend AI sendiri; jangan taruh secret API key di browser.</p>
+    </section>
+  </div>
+
+  <div id="kairoTerminal" class="barbar-modal" hidden>
+    <div class="barbar-backdrop" data-close-terminal></div>
+    <section class="terminal-dialog">
+      <button class="barbar-close" data-close-terminal type="button">×</button>
+      <div class="terminal-head"><span class="terminal-led"></span><strong>KAIRO TERMINAL v5.0</strong><small>secure local shell</small></div>
+      <div id="terminalOutput" class="terminal-output"><pre>KAIRO SYSTEM ONLINE.
+Ketik <b>help</b> untuk melihat command.</pre></div>
+      <form id="terminalForm" class="terminal-form"><span>&gt;</span><input id="terminalInput" autocomplete="off" spellcheck="false" placeholder="type a command..."></form>
+    </section>
+  </div>
+
+  <div id="mirrorRoom" class="barbar-modal" hidden>
+    <div class="barbar-backdrop" data-close-mirror></div>
+    <section class="barbar-dialog mirror-dialog"><button class="barbar-close" data-close-mirror type="button">×</button><p class="eyebrow"><span></span> THE MIRROR</p><h2>Jejak <em>lu.</em></h2><div class="mirror-symbol">🪞</div><p id="mirrorText"></p><button class="btn btn-primary" data-close-mirror type="button">KEMBALI KE MARKAZ</button></section>
+  </div>
+
+  <div id="dnaRoom" class="barbar-modal" hidden>
+    <div class="barbar-backdrop" data-close-dna></div>
+    <section class="barbar-dialog"><button class="barbar-close" data-close-dna type="button">×</button><p class="eyebrow"><span></span> EXPLORER PROFILE</p><h2>KAIRO <em>DNA.</em></h2><div class="dna-grid"><div><b id="dnaXP">0</b><small>XP</small></div><div><b id="dnaRooms">0</b><small>ROOMS</small></div><div><b id="dnaSecrets">0</b><small>CLUES</small></div><div><b id="dnaVisits">0</b><small>VISITS</small></div></div><div id="dnaLevel" class="dna-level">EXPLORER LEVEL 1</div><p>Profil ini dihitung dari aktivitas browser lu dan tidak mengirim data pribadi ke server.</p></section>
+  </div>
+
+  <div id="kairoCore" class="barbar-modal" hidden>
+    <div class="barbar-backdrop" data-close-core></div>
+    <section class="core-dialog"><button class="barbar-close" data-close-core type="button">×</button><div class="core-ring">🧬</div><p class="eyebrow"><span></span> ACCESS GRANTED</p><h2>KAIRO <em>CORE.</em></h2><p>Lu berhasil menyatukan rantai clue. Ini inti Digital Home: semua eksplorasi, cerita, dan jejak KAIRO terhubung di satu tempat.</p><div class="core-code">KAIRO / ILLIYYIN / STHANA / CORE / ONLINE</div><button id="coreUnlockBtn" class="btn btn-primary" type="button">SYNC THE UNIVERSE ✦</button></section>
+  </div>
+
+  <button id="installBtn" class="install-btn" type="button" hidden>＋ PASANG APP</button>
+  <button id="confettiBtn" class="party-btn" type="button" aria-label="Rayakan Kairo Sthana">🎉 PARTY</button>
+  <script src="script.js"></script>
+  <script src="living-story.js"></script>
+  <script src="world-engine.js"></script>
+  <script src="elders.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

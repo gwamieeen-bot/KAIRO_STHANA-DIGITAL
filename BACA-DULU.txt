@@ -1,0 +1,3 @@
+Folder ini siap diupload ke GitHub Pages.
+PENTING: tambahkan folder "assets" (logo + gambar maskot) ke dalam folder ini sebelum upload.
+Naikkan angka versi di service-worker.js setiap habis edit file.

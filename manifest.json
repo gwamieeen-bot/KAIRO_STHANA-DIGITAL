@@ -1,0 +1,13 @@
+{
+  "name": "Kairo Sthana — Kamar Illiyyin Loro",
+  "short_name": "Kairo Sthana",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#071311",
+  "theme_color": "#071311",
+  "description": "Kairo Sthana — Kamar Illiyyin Loro, Pondok Pesantren Darul Falah.",
+  "lang": "id-ID",
+  "icons": [
+    {"src":"assets/kairo-logo-square.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
