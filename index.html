@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="photos.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
 </head>
@@ -208,6 +209,13 @@
         <div class="gallery-box interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 02</span><small>Piala & prestasi</small></div>
         <div class="gallery-box interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 03</span><small>Kegiatan</small></div>
         <div class="gallery-box wide interactive-card" tabindex="0" role="button" data-interactive="gallery"><span>FOTO 04</span><small>Coming soon</small></div>
+      </div>
+      <div id="photoGallery" class="pg" hidden>
+        <h3 class="pg-title">Galeri foto</h3>
+        <div id="pgAlbums" class="pg-albums"></div>
+        <div id="pgGrid" class="pg-grid"></div>
+        <p id="pgMsg" class="pg-msg" role="status"></p>
+        <button id="pgMore" class="pg-btn pg-more" type="button" hidden>Muat lebih banyak</button>
       </div>
     </section>
 
@@ -465,6 +473,7 @@
         <button class="admin-tab active" data-tab="content">Konten</button>
         <button class="admin-tab" data-tab="achievements">Prestasi</button>
         <button class="admin-tab" data-tab="gallery">Gallery</button>
+        <button class="admin-tab" data-tab="photos">Album Foto</button>
         <button class="admin-tab" data-tab="members">Member</button>
         <button class="admin-tab" data-tab="living">Living Story</button>
         <button class="admin-tab" data-tab="tools">Tools</button>
@@ -506,6 +515,10 @@
           </div>
           <button class="btn btn-primary">SIMPAN GALLERY ↗</button>
         </form>
+      </div>
+
+      <div class="admin-pane" data-pane="photos">
+        <div id="photoAdminRoot"></div>
       </div>
 
       <div class="admin-pane" data-pane="members">
@@ -638,5 +651,6 @@ Ketik <b>help</b> untuk melihat command.</pre></div>
   <script src="world-engine.js"></script>
   <script src="elders.js"></script>
 <script src="admin.js"></script>
+  <script src="photos.js"></script>
 </body>
 </html>
