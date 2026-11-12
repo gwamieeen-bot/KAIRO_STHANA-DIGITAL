@@ -154,32 +154,12 @@
       <div class="section-heading reveal">
         <p class="eyebrow"><span></span> 02 — HALL OF FAME</p>
         <h2>Jejak yang<br><em>pernah dimenangkan.</em></h2>
-        <p class="section-note">Data di bawah adalah placeholder. Ganti dengan prestasi aslimu.</p>
+        <p class="section-note">Kumpulan prestasi Kamar Illiyyin Loro.</p>
       </div>
 
-      <div class="trophy-grid">
-        <article class="trophy reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
-          <span class="number">01</span>
-          <div class="trophy-icon">🏆</div>
-          <h3>Juara 1</h3>
-          <p>Nama Lomba / Kompetisi</p>
-          <small>2026 · Placeholder</small>
-        </article>
-        <article class="trophy featured reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
-          <span class="number">02</span>
-          <div class="trophy-icon">🥇</div>
-          <h3>Juara 2</h3>
-          <p>Nama Lomba / Kompetisi</p>
-          <small>2026 · Placeholder</small>
-        </article>
-        <article class="trophy reveal interactive-card" tabindex="0" role="button" data-interactive="achievement">
-          <span class="number">03</span>
-          <div class="trophy-icon">🏅</div>
-          <h3>Finalis</h3>
-          <p>Nama Lomba / Kompetisi</p>
-          <small>2026 · Placeholder</small>
-        </article>
-      </div>
+      <div class="trophy-grid" id="achGrid"></div>
+      <p id="achEmpty" class="section-note" hidden>Belum ada prestasi yang dicatat.</p>
+      <button id="achMore" class="pg-btn pg-more" type="button" hidden>Lihat semua</button>
       <div class="more-achievements reveal">
         <span>BANYAK CERITA MASIH AKAN DITAMBAHKAN</span>
         <span>✦</span>
@@ -493,15 +473,7 @@
       </div>
 
       <div class="admin-pane" data-pane="achievements">
-        <form id="achievementForm" class="admin-stack-form">
-          <p class="admin-note">Edit tiga kartu prestasi yang sudah ada.</p>
-          <div class="admin-card-grid">
-            <fieldset><legend>01</legend><input name="a1t" placeholder="Judul"><input name="a1n" placeholder="Nama lomba"><input name="a1m" placeholder="Tahun · keterangan"></fieldset>
-            <fieldset><legend>02</legend><input name="a2t" placeholder="Judul"><input name="a2n" placeholder="Nama lomba"><input name="a2m" placeholder="Tahun · keterangan"></fieldset>
-            <fieldset><legend>03</legend><input name="a3t" placeholder="Judul"><input name="a3n" placeholder="Nama lomba"><input name="a3m" placeholder="Tahun · keterangan"></fieldset>
-          </div>
-          <button class="btn btn-primary">SIMPAN PRESTASI ↗</button>
-        </form>
+        <div id="achAdminRoot"></div>
       </div>
 
       <div class="admin-pane" data-pane="gallery">
@@ -652,5 +624,6 @@ Ketik <b>help</b> untuk melihat command.</pre></div>
   <script src="elders.js"></script>
 <script src="admin.js"></script>
   <script src="photos.js"></script>
+  <script src="achievements.js"></script>
 </body>
 </html>

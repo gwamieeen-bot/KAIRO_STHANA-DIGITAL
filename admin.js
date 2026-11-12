@@ -69,7 +69,7 @@
     $(".instagram strong").textContent=c.instagram.startsWith("@")?c.instagram:"@"+c.instagram;
     $(".instagram").href="https://instagram.com/"+c.instagram.replace(/^@/,"");
     $("#announcementText").textContent=c.announcement;$("#announcementBar").hidden=!c.announcement;
-    $$(".trophy-grid .trophy").forEach((card,i)=>{let x=data.achievements[i];if(!x)return;card.querySelector("h3").textContent=x[0];card.querySelector("p").textContent=x[1];card.querySelector("small").textContent=x[2]});
+    $$(".trophy-grid .trophy[data-legacy]").forEach((card,i)=>{let x=data.achievements[i];if(!x)return;card.querySelector("h3").textContent=x[0];card.querySelector("p").textContent=x[1];card.querySelector("small").textContent=x[2]});
     $$(".gallery-grid .gallery-box").forEach((box,i)=>{let x=data.gallery[i];if(!x)return;box.querySelector("small").textContent=x[1];box.classList.toggle("has-image",!!x[0]);box.style.backgroundImage=x[0]?`url("${url(x[0])}")`:""});
   }
   function renderMembers(){$("#memberPreview").innerHTML=data.members.map(x=>`<span class="member-chip">👤 ${esc(x)}</span>`).join("")||"<span class='admin-muted'>Belum ada member.</span>"}

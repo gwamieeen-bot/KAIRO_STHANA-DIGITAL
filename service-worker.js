@@ -1,8 +1,8 @@
 // Naikkan angka versi ini (v6 -> v7 dst) setiap habis edit file, supaya pengunjung dapat versi terbaru.
-const CACHE_NAME = "kairo-sthana-v8";
+const CACHE_NAME = "kairo-sthana-v9";
 const APP_ASSETS = [
   "./", "./index.html", "./style.css", "./script.js", "./living-story.js",
-  "./world-engine.js", "./elders.js", "./admin.js", "./config.js", "./photos.js", "./photos.css", "./manifest.json",
+  "./world-engine.js", "./elders.js", "./admin.js", "./config.js", "./photos.js", "./achievements.js", "./photos.css", "./manifest.json",
   "./assets/kairo-logo.png", "./assets/kairo-logo-square.png",
   "./assets/timeline-robot-mascot.png"
 ];
