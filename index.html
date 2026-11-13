@@ -292,6 +292,7 @@
         <div id="chatMessages" class="chat-messages" aria-live="polite">
           <div class="chat-empty">Belum ada pesan. Jadilah yang pertama 👋</div>
         </div>
+        <div id="chatGate" class="chat-gate" hidden></div>
         <form id="chatForm" class="chat-form">
           <input id="chatName" type="text" maxlength="20" placeholder="Nama" autocomplete="nickname" required />
           <input id="chatMessage" type="text" maxlength="200" placeholder="Tulis pesan untuk circle..." autocomplete="off" required />
@@ -431,14 +432,22 @@
       <button class="admin-close" data-close-auth type="button">×</button>
       <p class="eyebrow"><span></span> KAIRO ACCESS</p>
       <h2>Login <em>Circle</em></h2>
-      <p class="admin-muted">Member memakai website normal. Admin mendapat panel pengelolaan.</p>
+      <p class="admin-muted">Masuk buat ikut Circle Chat. Akun baru perlu disetujui admin dulu.</p>
       <form id="authForm" class="admin-form">
-        <label>Email admin<input id="authUsername" type="email" autocomplete="email" required></label>
+        <label>Email<input id="authUsername" type="email" autocomplete="email" required></label>
         <label>Password<input id="authPassword" type="password" autocomplete="current-password" required></label>
         <button class="btn btn-primary" type="submit">MASUK ↗</button>
         <p id="authError" class="admin-error"></p>
       </form>
-      <p class="admin-warning">Khusus admin. Login memakai akun Supabase.</p>
+      <p id="authSwitchLogin" class="admin-muted auth-switch">Belum punya akun? <button type="button" class="linklike" id="authToReg">Daftar</button></p>
+      <form id="regForm" class="admin-form" hidden>
+        <label>Email<input id="regEmail" type="email" autocomplete="email" required></label>
+        <label>Password (minimal 8 karakter)<input id="regPassword" type="password" autocomplete="new-password" minlength="8" required></label>
+        <label>Nama tampilan di chat<input id="regName" maxlength="20" autocomplete="nickname" required></label>
+        <button class="btn btn-primary" type="submit">DAFTAR ↗</button>
+        <p id="regError" class="admin-error"></p>
+      </form>
+      <p id="authSwitchReg" class="admin-muted auth-switch" hidden>Sudah punya akun? <button type="button" class="linklike" id="authToLogin">Masuk</button></p>
     </section>
   </div>
 
@@ -455,6 +464,7 @@
         <button class="admin-tab" data-tab="gallery">Gallery</button>
         <button class="admin-tab" data-tab="photos">Album Foto</button>
         <button class="admin-tab" data-tab="members">Member</button>
+        <button class="admin-tab" data-tab="accounts">Akun Chat</button>
         <button class="admin-tab" data-tab="living">Living Story</button>
         <button class="admin-tab" data-tab="tools">Tools</button>
       </div>
@@ -499,6 +509,10 @@
           <button class="btn btn-primary">SIMPAN MEMBER ↗</button>
         </form>
         <div id="memberPreview" class="member-preview"></div>
+      </div>
+
+      <div class="admin-pane" data-pane="accounts">
+        <div id="memberAdminRoot"></div>
       </div>
 
       <div class="admin-pane" data-pane="living">
@@ -625,5 +639,6 @@ Ketik <b>help</b> untuk melihat command.</pre></div>
 <script src="admin.js"></script>
   <script src="photos.js"></script>
   <script src="achievements.js"></script>
+  <script src="member.js"></script>
 </body>
 </html>

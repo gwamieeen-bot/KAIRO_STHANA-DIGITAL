@@ -15,11 +15,11 @@
   let data=load(), $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const session=()=>isAdmin?{role:"admin"}:null;
   const setSession=role=>{isAdmin=role==="admin";ui()};
-  const ui=()=>{let s=session(),a=s?.role==="admin";document.body.classList.toggle("admin-mode",a);$("#authOpenBtn").hidden=!!s;$("#adminOpenBtn").hidden=!a;$("#logoutBtn").hidden=!s};
+  const ui=()=>{let s=session(),a=s?.role==="admin";document.body.classList.toggle("admin-mode",a);const li=!!s||!!window.KairoMember?.user;$("#authOpenBtn").hidden=li;$("#adminOpenBtn").hidden=!a;$("#logoutBtn").hidden=!li};
   const open=m=>{m.hidden=false;document.body.style.overflow="hidden"}, close=m=>{m.hidden=true;if($("#authModal").hidden&&$("#adminModal").hidden)document.body.style.overflow=""};
   $("#authOpenBtn")?.addEventListener("click",()=>open($("#authModal")));
   $("#adminOpenBtn")?.addEventListener("click",()=>{if(session()?.role==="admin"){fill();open($("#adminModal"))}});
-  $("#logoutBtn")?.addEventListener("click",async()=>{isAdmin=false;ui();try{await sb?.auth.signOut()}catch{}window.KairoLiving?.reload?.()});
+  $("#logoutBtn")?.addEventListener("click",async()=>{isAdmin=false;ui();try{await sb?.auth.signOut()}catch{}window.KairoLiving?.reload?.();window.KairoMember?.refresh?.()});
   $$("[data-close-auth]").forEach(x=>x.addEventListener("click",()=>close($("#authModal"))));
   $$("[data-close-admin]").forEach(x=>x.addEventListener("click",()=>close($("#adminModal"))));
 
@@ -36,8 +36,9 @@
     try{
       const {data:r,error}=await sb.auth.signInWithPassword({email,password:pw});
       if(error||!r?.user){err.textContent="Email atau password salah.";return}
-      if(!(await checkAdmin(r.user.id))){await sb.auth.signOut();err.textContent="Akun ini bukan admin.";return}
-      f.reset();err.textContent="";close($("#authModal"));fill();open($("#adminModal"));
+      const isAdm=await checkAdmin(r.user.id);
+      f.reset();err.textContent="";close($("#authModal"));
+      if(isAdm){fill();open($("#adminModal"))}else window.KairoMember?.refresh?.();
     }catch{err.textContent="Gagal terhubung. Coba lagi."}
   });
 
@@ -100,6 +101,7 @@
   $("#adminModal")?.addEventListener('click',e=>{if(e.target.matches('[data-tab="living"]'))renderLivingAdmin()});
     $("#resetAllBtn")?.addEventListener("click",()=>{if(confirm("Reset semua konten ke bawaan?")){localStorage.removeItem(KEY);data=clone(defaults);persist();apply();fill()}});
   $("#announcementClose")?.addEventListener("click",()=>$("#announcementBar").hidden=true);
+  window.KairoAdminUI=ui;
   if(!sb)apply();
   ui();renderLivingAdmin();
   (async()=>{

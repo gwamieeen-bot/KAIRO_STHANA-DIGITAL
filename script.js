@@ -242,7 +242,7 @@ async function loadOnlineChat() {
   }
 
   try {
-    supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey);
+    supabaseClient = window.KairoSB || (window.KairoSB = window.supabase.createClient(cfg.url, cfg.anonKey));
     const { data, error } = await supabaseClient
       .from("kairo_messages")
       .select("id, room, name, message, created_at")
@@ -295,7 +295,7 @@ chatForm?.addEventListener("submit", async e => {
       .single();
     if (error) {
       console.error("Gagal kirim pesan:", error);
-      setChatStatus(false, "Pesan gagal dikirim • cek koneksi");
+      setChatStatus(false, /cepat/i.test(error.message || "") ? "Terlalu cepat, tunggu sebentar" : "Pesan gagal dikirim • cek koneksi");
       return;
     }
     if (data && !chatData.some(msg => msg.id === data.id)) chatData.push(data);
@@ -313,6 +313,11 @@ chatForm?.addEventListener("submit", async e => {
 
 chatName?.addEventListener("input", renderChat);
 loadOnlineChat();
+window.KairoChatReload = async () => {
+  try { if (realtimeChannel && supabaseClient) await supabaseClient.removeChannel(realtimeChannel); } catch {}
+  realtimeChannel = null;
+  await loadOnlineChat();
+};
 
 // ===============================
 // CONFETTI — NO EXTERNAL LIBRARY
