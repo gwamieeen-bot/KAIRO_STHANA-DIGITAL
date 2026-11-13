@@ -104,10 +104,15 @@
   window.KairoAdminUI=ui;
   if(!sb)apply();
   ui();renderLivingAdmin();
-  (async()=>{
+  async function loadSite(){
     if(!sb)return;
     try{const {data:row}=await sb.from('kairo_site').select('value').eq('key','site').maybeSingle();if(row?.value)remoteData=row.value}catch{}
     data=load();apply();
+  }
+  (async()=>{
+    if(!sb)return;
+    await loadSite();
     try{const {data:s}=await sb.auth.getSession();if(s?.session)await checkAdmin(s.session.user.id)}catch{}
   })();
+  window.addEventListener('kairo:auth',loadSite);
 })();

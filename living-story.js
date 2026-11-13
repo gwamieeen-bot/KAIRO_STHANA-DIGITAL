@@ -53,5 +53,6 @@
   window.KairoLiving={reload:load,render,read,write,KEY,chapters,approved,setStatus,remote:!!sb};
   $('#memoryForm')?.addEventListener('submit',submit);
   sb?.auth?.onAuthStateChange?.(()=>setTimeout(load,0));
+  window.addEventListener('kairo:auth',()=>load());
   load();setInterval(load,sb?20000:5000);
 })();

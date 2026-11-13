@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("kairo-locked")</script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="photos.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -426,13 +427,21 @@
   </div>
   <div id="kairoToast" class="kairo-toast" role="status" aria-live="polite" hidden></div>
 
+  <div id="siteGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <div class="gate-card">
+      <p class="eyebrow"><span></span> KAIRO STHANA</p>
+      <h2 id="gateTitle">Khusus member</h2>
+      <div id="gateBody"><p>Memeriksa akun…</p></div>
+    </div>
+  </div>
+
   <div id="authModal" class="admin-modal" hidden>
     <div class="admin-backdrop" data-close-auth></div>
     <section class="admin-dialog auth-dialog">
       <button class="admin-close" data-close-auth type="button">×</button>
       <p class="eyebrow"><span></span> KAIRO ACCESS</p>
       <h2>Login <em>Circle</em></h2>
-      <p class="admin-muted">Masuk buat ikut Circle Chat. Akun baru perlu disetujui admin dulu.</p>
+      <p class="admin-muted">Masuk buat membuka website dan ikut Circle Chat. Daftar butuh kode akses dari admin.</p>
       <form id="authForm" class="admin-form">
         <label>Email<input id="authUsername" type="email" autocomplete="email" required></label>
         <label>Password<input id="authPassword" type="password" autocomplete="current-password" required></label>
@@ -444,6 +453,7 @@
         <label>Email<input id="regEmail" type="email" autocomplete="email" required></label>
         <label>Password (minimal 8 karakter)<input id="regPassword" type="password" autocomplete="new-password" minlength="8" required></label>
         <label>Nama tampilan di chat<input id="regName" maxlength="20" autocomplete="nickname" required></label>
+        <label>Kode akses (dari admin)<input id="regCode" autocomplete="off" required></label>
         <button class="btn btn-primary" type="submit">DAFTAR ↗</button>
         <p id="regError" class="admin-error"></p>
       </form>

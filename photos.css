@@ -56,3 +56,14 @@
 .linklike{background:none;border:0;padding:0;color:var(--teal);text-decoration:underline;cursor:pointer;font:inherit;justify-self:start}
 .auth-switch{margin-top:14px}
 .auth-switch[hidden]{display:none}
+
+/* Gerbang situs (khusus member) */
+html.kairo-locked,html.kairo-locked body{overflow:hidden;height:100%}
+html.kairo-locked body>*:not(#siteGate):not(#authModal){visibility:hidden!important;pointer-events:none!important}
+#siteGate{position:fixed;inset:0;z-index:400;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 30% 20%,rgba(53,224,192,.12),transparent 55%),#020807;overflow:auto}
+html:not(.kairo-locked) #siteGate{display:none}
+#authModal{z-index:500}
+.gate-card{width:min(460px,100%);display:grid;gap:14px;padding:28px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.03)}
+.gate-card h2{font:700 clamp(28px,6vw,38px) "Space Grotesk",sans-serif;margin:0}
+.gate-card p{color:var(--muted);line-height:1.6;margin:0}
+.gate-card .admin-error{min-height:1em}

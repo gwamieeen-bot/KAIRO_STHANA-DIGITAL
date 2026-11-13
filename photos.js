@@ -169,6 +169,6 @@
   }
 
   $('.admin-tab[data-tab="photos"]')?.addEventListener('click',()=>{build();resetAdmin()});
-  sb.auth.onAuthStateChange?.(()=>{});
+  window.addEventListener('kairo:auth',()=>{S.album=null;refreshAll()});
   loadAlbums().then(()=>{if(!wrap?.hidden)loadMore()});
 })();

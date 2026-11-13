@@ -128,5 +128,6 @@
   }
 
   $('.admin-tab[data-tab="achievements"]')?.addEventListener('click',()=>{build();renderList()});
+  window.addEventListener('kairo:auth',()=>{showAll=false;load()});
   load();
 })();
