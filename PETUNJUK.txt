@@ -1,0 +1,29 @@
+KAIRO — PATCH PENDAFTARAN OTOMATIS DENGAN KODE AKSES
+
+File dalam ZIP ini hanya untuk mengganti file dengan nama yang sama di root
+repository GitHub KAIRO_STHANA-DIGITAL:
+- member.js
+- service-worker.js
+
+Perubahan:
+1. Setelah signUp, website memakai session yang dikembalikan Supabase.
+2. Jika signup tidak mengembalikan session, website mencoba signInWithPassword
+   sekali dengan email/password yang baru didaftarkan.
+3. Jika sesi tetap tidak tersedia, pesan yang ditampilkan menjelaskan bahwa
+   sesi login belum aktif; bukan menyebut menunggu persetujuan admin.
+4. Setelah session tersedia, website memanggil RPC kairo_register(p_name, p_code).
+5. Service worker dinaikkan ke cache v12 agar browser mengambil aset terbaru.
+
+PENTING:
+- Jangan mengganti config.js atau kredensial Supabase.
+- Pastikan Authentication > Sign In / Providers > Email > Confirm Email OFF
+  lalu klik Save changes.
+- SQL function public.kairo_register(text, text) yang sudah ada tetap dipakai.
+  Function tersebut harus memvalidasi kode akses dan membuat profile approved=true.
+- Jangan menjalankan ulang SQL lama yang berisi banyak CREATE/DROP/UPDATE.
+- Setelah upload kedua file ke root branch main, tunggu GitHub Pages selesai deploy.
+- Tes dengan alamat email baru yang belum pernah terdaftar dan kode akses yang benar.
+- Jika akun sudah terlanjur dibuat tetapi belum punya profil, login dengan akun itu,
+  lalu isi nama dan kode akses di gerbang KAIRO.
+
+Patch ini tidak menyertakan password, service-role key, atau kode akses.

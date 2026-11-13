@@ -45,7 +45,21 @@
     try{
       const {data,error}=await sb.auth.signUp({email,password:pw});
       if(error){err.textContent=authErr(error);return}
-      if(!data?.session){err.textContent='Akun dibuat, tapi masih butuh konfirmasi email. Hubungi admin.';return}
+
+      // Dengan Confirm Email OFF, signup biasanya langsung memberi session.
+      // Jika provider tidak mengembalikannya, coba login sekali memakai kredensial
+      // yang baru saja didaftarkan sebelum memanggil RPC yang membutuhkan auth.uid().
+      let session=data?.session||null;
+      if(!session){
+        const {data:loginData,error:loginError}=await sb.auth.signInWithPassword({email,password:pw});
+        session=loginData?.session||null;
+        if(loginError||!session){
+          err.textContent='Akun berhasil dibuat, tetapi sesi login belum aktif. Pastikan Confirm Email sudah OFF dan tersimpan. Coba masuk lewat tab Masuk; jika email masih meminta verifikasi, periksa pengaturan Email Supabase.';
+          setMode('login');
+          return;
+        }
+      }
+
       const {data:res,error:e2}=await sb.rpc('kairo_register',{p_name:name,p_code:code});
       const problem=e2?errText(e2):codeMsg(res);
       err.textContent='';e.target.reset();closeAuth();
@@ -68,7 +82,7 @@
     if(!gate)return;
     if(ok){gate.hidden=true;if(form)form.hidden=false;if(nameIn){nameIn.value=M.profile.display_name;nameIn.readOnly=true;nameIn.title='Nama terkunci ke akun lu'}return}
     if(form)form.hidden=true;gate.hidden=false;
-    if(msgs)msgs.innerHTML='<div class="chat-empty">Chat khusus member yang sudah disetujui 🔒</div>';
+    if(msgs)msgs.innerHTML='<div class="chat-empty">Chat khusus anggota KAIRO yang sudah aktif 🔒</div>';
     gate.innerHTML=gateHTML('chat');
   }
   async function onGate(e,box){
