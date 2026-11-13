@@ -441,7 +441,7 @@
       <button class="admin-close" data-close-auth type="button">×</button>
       <p class="eyebrow"><span></span> KAIRO ACCESS</p>
       <h2>Login <em>Circle</em></h2>
-      <p class="admin-muted">Masuk buat membuka website dan ikut Circle Chat. Daftar butuh kode akses dari admin.</p>
+      <p class="admin-muted">Masuk pakai email dan password. Buat member, password lu adalah kode pribadi dari admin.</p>
       <form id="authForm" class="admin-form">
         <label>Email<input id="authUsername" type="email" autocomplete="email" required></label>
         <label>Password<input id="authPassword" type="password" autocomplete="current-password" required></label>
@@ -451,9 +451,8 @@
       <p id="authSwitchLogin" class="admin-muted auth-switch">Belum punya akun? <button type="button" class="linklike" id="authToReg">Daftar</button></p>
       <form id="regForm" class="admin-form" hidden>
         <label>Email<input id="regEmail" type="email" autocomplete="email" required></label>
-        <label>Password (minimal 8 karakter)<input id="regPassword" type="password" autocomplete="new-password" minlength="8" required></label>
-        <label>Nama tampilan di chat<input id="regName" maxlength="20" autocomplete="nickname" required></label>
-        <label>Kode akses (dari admin)<input id="regCode" autocomplete="off" required></label>
+        <label>Kode pribadi dari admin<input id="regCode" autocomplete="off" placeholder="contoh: a1b2-c3d4-e5f6" required></label>
+        <p class="admin-muted">Nama lu otomatis terisi dari daftar admin dan nggak bisa diubah. Kode ini juga jadi password buat masuk, jadi simpan dan jangan dikasih ke orang lain.</p>
         <button class="btn btn-primary" type="submit">DAFTAR ↗</button>
         <p id="regError" class="admin-error"></p>
       </form>

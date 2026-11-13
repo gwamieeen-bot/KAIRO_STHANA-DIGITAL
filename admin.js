@@ -30,7 +30,8 @@
   }
   $("#authForm")?.addEventListener("submit",async e=>{
     e.preventDefault();const f=e.target,err=$("#authError");
-    const email=$("#authUsername").value.trim(),pw=$("#authPassword").value;
+    const canonPw=v=>{const s=String(v).trim().toLowerCase();return /^[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}$/.test(s)?s.replace(/-/g,"").replace(/(.{4})(.{4})(.{4})/,"$1-$2-$3"):v};
+    const email=$("#authUsername").value.trim(),pw=canonPw($("#authPassword").value);
     if(!sb){err.textContent="Supabase belum tersambung, login admin belum tersedia.";return}
     err.textContent="Memeriksa…";
     try{
