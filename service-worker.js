@@ -1,10 +1,10 @@
 // Naikkan angka versi ini (v6 -> v7 dst) setiap habis edit file, supaya pengunjung dapat versi terbaru.
-const CACHE_NAME = "kairo-sthana-v11";
+const CACHE_NAME = "kairo-sthana-v12";
 const APP_ASSETS = [
   "./", "./index.html", "./style.css", "./script.js", "./living-story.js",
   "./world-engine.js", "./elders.js", "./admin.js", "./config.js", "./photos.js", "./achievements.js", "./member.js", "./photos.css", "./manifest.json",
   "./assets/kairo-logo.png", "./assets/kairo-logo-square.png",
-  "./assets/timeline-robot-mascot.png"
+  "./assets/timeline-robot-mascot.jpg", "./assets/kairo-logo-full.png", "./assets/mascot-1.jpg", "./assets/mascot-2.jpg", "./assets/mascot-3.jpg", "./assets/mascot-4.jpg", "./assets/mascot-5.jpg", "./assets/mascot-6.jpg", "./assets/mascot-7.jpg"
 ];
 
 self.addEventListener("install", event => {

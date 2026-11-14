@@ -73,3 +73,19 @@ html:not(.kairo-locked) #siteGate{display:none}
 .inv-row{flex-wrap:wrap}
 .inv-code{display:inline-block;margin-top:4px;padding:3px 8px;border-radius:6px;background:rgba(53,224,192,.1);color:var(--teal);font:12px ui-monospace,Menlo,Consolas,monospace;user-select:all}
 .eye{margin-top:6px;justify-self:start;background:none;border:0;color:var(--teal);font:600 11px "Space Grotesk",sans-serif;cursor:pointer;text-decoration:underline;padding:0}
+
+
+/* Maskot: animasi pembuka (8 detik, sekali) lalu "napas" halus */
+.hero-card.mascot-card .mascot-placeholder{height:auto;aspect-ratio:4/5;max-height:560px;overflow:hidden;border-radius:26px;background:#041210;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 60px rgba(53,224,192,.10)}
+.hero-card.mascot-card .mascot-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:none}
+.mascot-intro{position:absolute;inset:0;z-index:2;animation:kmOut 1.1s ease-in-out 8.2s forwards}
+.hero-card.mascot-card .mascot-placeholder .mascot-intro img{opacity:0;animation:kmIn .9s ease-out var(--d,0s) forwards}
+.hero-card.mascot-card .mascot-placeholder .mascot-final{z-index:1;opacity:0;animation:kmFinal 1.1s ease-in-out 8.2s forwards,kmFloat 8s ease-in-out 9.3s infinite alternate}
+@keyframes kmIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:scale(1)}}
+@keyframes kmOut{to{opacity:0;visibility:hidden}}
+@keyframes kmFinal{to{opacity:1}}
+@keyframes kmFloat{from{transform:scale(1.04) translateY(0)}to{transform:scale(1.08) translateY(-7px)}}
+html.kairo-locked .mascot-intro,html.kairo-locked .mascot-intro img,html.kairo-locked .mascot-final{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.mascot-intro{display:none}.hero-card.mascot-card .mascot-placeholder .mascot-final{opacity:1;animation:none}}
+.mascot-ai-head img{object-position:50% 36%}
+.gate-logo{display:block;width:min(170px,55%);height:auto;margin:0 0 4px}

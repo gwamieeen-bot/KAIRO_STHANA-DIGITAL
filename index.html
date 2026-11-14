@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#071311" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="assets/kairo-logo-square.png" />
+  <link rel="apple-touch-icon" href="assets/kairo-logo-square.png" />
   <meta name="description" content="Kairo Sthana — Kamar Illiyyin Loro, Pondok Pesantren Darul Falah." />
   <title>Kairo Sthana — Kamar Illiyyin Loro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +71,16 @@
 
       <div class="hero-card reveal mascot-card" id="robotMascot">
         <div class="photo-placeholder mascot-placeholder">
-          <img src="assets/timeline-robot-mascot.png" alt="Maskot robot futuristik Kairo Sthana dengan kamera" onerror="this.hidden=true;this.parentElement.classList.add('mascot-fallback')" />
+          <div class="mascot-intro" aria-hidden="true">
+          <img src="assets/mascot-1.jpg" alt="" decoding="async" style="--d:0.3s" />
+          <img src="assets/mascot-2.jpg" alt="" decoding="async" style="--d:1.3s" />
+          <img src="assets/mascot-3.jpg" alt="" decoding="async" style="--d:2.3s" />
+          <img src="assets/mascot-4.jpg" alt="" decoding="async" style="--d:3.3s" />
+          <img src="assets/mascot-5.jpg" alt="" decoding="async" style="--d:4.3s" />
+          <img src="assets/mascot-6.jpg" alt="" decoding="async" style="--d:5.3s" />
+          <img src="assets/mascot-7.jpg" alt="" decoding="async" style="--d:6.3s" />
+          </div>
+          <img class="mascot-final" src="assets/timeline-robot-mascot.jpg" alt="Maskot Kairo Sthana berpose damai dengan jaket berkerudung" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('mascot-fallback')" />
         </div>
         <div class="mascot-chat" aria-label="Percakapan dengan maskot">
           <div class="mascot-speech" id="mascotSpeech" role="status" aria-live="polite">
@@ -429,6 +440,7 @@
 
   <div id="siteGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
     <div class="gate-card">
+      <img class="gate-logo" src="assets/kairo-logo-full.png" alt="Logo Kairo" onerror="this.hidden=true" />
       <p class="eyebrow"><span></span> KAIRO STHANA</p>
       <h2 id="gateTitle">Khusus member</h2>
       <div id="gateBody"><p>Memeriksa akun…</p></div>
@@ -606,7 +618,7 @@
     <div class="barbar-backdrop" data-close-mascot></div>
     <section class="barbar-dialog mascot-ai-dialog">
       <button class="barbar-close" data-close-mascot type="button">×</button>
-      <div class="mascot-ai-head"><img src="assets/timeline-robot-mascot.png" alt="Maskot KAIRO"><div><p class="eyebrow"><span></span> KAIRO MASCOT AI</p><h2>Gue <em>ngoceh.</em></h2><small>Local AI personality · optional real AI backend · voice enabled</small></div></div>
+      <div class="mascot-ai-head"><img src="assets/timeline-robot-mascot.jpg" alt="Maskot KAIRO"><div><p class="eyebrow"><span></span> KAIRO MASCOT AI</p><h2>Gue <em>ngoceh.</em></h2><small>Local AI personality · optional real AI backend · voice enabled</small></div></div>
       <div id="mascotAiLog" class="mascot-ai-log"></div>
       <form id="mascotAiForm" class="mascot-ai-form"><input id="mascotAiInput" maxlength="180" placeholder="Tanya apa aja ke maskot..." autocomplete="off"><button type="submit" class="btn btn-primary">KIRIM ↗</button></form>
       <div class="mascot-ai-controls"><button id="mascotAutoToggle" type="button">AUTO TALK: ON</button><button id="mascotVoiceToggle" type="button">VOICE: ON</button><button id="mascotRealAiBtn" type="button">⚡ REAL AI</button></div>
