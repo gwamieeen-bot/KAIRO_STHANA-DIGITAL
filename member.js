@@ -46,7 +46,8 @@
     $('#regForm').hidden=!reg;$('#authSwitchReg').hidden=!reg;
   }
   function openAuth(m){const modal=$('#authModal');if(!modal)return;setMode(m);modal.hidden=false;document.body.style.overflow='hidden'}
-  function closeAuth(){const modal=$('#authModal');if(modal)modal.hidden=true;if(root.classList.contains('kairo-locked')===false&&$('#adminModal')?.hidden!==false)document.body.style.overflow=''}
+  const anyModalOpen=()=>[$('#adminModal'),$('#authModal')].some(m=>m&&m.hidden===false);
+  function closeAuth(){const modal=$('#authModal');if(modal)modal.hidden=true;if(!anyModalOpen())document.body.style.overflow=''}
   $('#authOpenBtn')?.addEventListener('click',()=>setMode('login'));
   $('#authToReg')?.addEventListener('click',()=>setMode('register'));
   $('#authToLogin')?.addEventListener('click',()=>setMode('login'));
@@ -81,6 +82,7 @@
   function render(ok){
     const unlocked=ok||M.admin;
     root.classList.toggle('kairo-locked',!unlocked);
+    if(unlocked&&!anyModalOpen())document.body.style.overflow=''; // pastikan halaman bisa di-scroll setelah masuk
     if(!unlocked&&sgate)sgate.innerHTML=gateHTML('site');
     const au=$('#memoryAuthor');if(au&&ok){au.value=M.profile.display_name;au.readOnly=true}
     if(!gate)return;
