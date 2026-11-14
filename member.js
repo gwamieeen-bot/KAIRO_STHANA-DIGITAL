@@ -11,13 +11,15 @@
   const NAME_RX=/^[A-Za-z0-9_. ]{3,20}$/,CODE_RX=/^[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}$/;
   const NAME_HINT='Nama 3-20 karakter: huruf, angka, spasi, titik, atau garis bawah.';
   const clean=s=>String(s||'').trim().replace(/\s+/g,' ');
+  const phoneNorm=v=>{let p=String(v||'').replace(/[^0-9]/g,'');if(p.startsWith('0'))p='62'+p.slice(1);else if(p.startsWith('8'))p='62'+p;return p};
+  const PHONE_RX=/^[0-9]{9,15}$/;
   const canon=v=>{const s=String(v||'').trim().toLowerCase(),h=s.replace(/[^0-9a-z]/g,'');return /^[0-9a-f]{12}$/.test(h)?h.replace(/(.{4})(.{4})(.{4})/,'$1-$2-$3'):s};
   const errText=e=>{
     const m=String(e?.message||e||'');
     if(e?.code==='23505'||/duplicate key/i.test(m))return /pkey/.test(m)?'Akun ini sudah punya nama.':'Nama itu sudah dipakai akun lain. Hubungi admin.';
     return m||'Terjadi kesalahan.';
   };
-  const claimMsg=r=>({ok:'',kode_salah:'Kode salah. Salin persis dari pesan admin, atau minta admin kirim ulang.',terpakai:'Kode ini sudah dipakai akun lain. Hubungi admin.',terlalu_banyak:'Terlalu banyak percobaan. Tunggu 10 menit.',sudah_punya_akun:'Akun ini sudah punya nama.'}[r]??'Gagal mengaktifkan kode.');
+  const claimMsg=r=>({ok:'',kode_salah:'Kode salah. Salin persis dari pesan admin, atau minta admin kirim ulang.',terpakai:'Kode ini sudah dipakai akun lain. Hubungi admin.',terlalu_banyak:'Terlalu banyak percobaan. Tunggu 10 menit.',wa_wajib:'Nomor WA wajib diisi.',sudah_punya_akun:'Akun ini sudah punya nama.'}[r]??'Gagal mengaktifkan kode.');
   const authErr=e=>{
     const m=String(e?.message||'');
     if(/already registered/i.test(m))return 'Email ini sudah terdaftar. Coba Masuk (password = kode dari admin). Lupa? Minta admin kirim ulang kodenya.';
@@ -50,14 +52,15 @@
   $('#authToLogin')?.addEventListener('click',()=>setMode('login'));
   $('#regForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
-    const err=$('#regError'),email=$('#regEmail').value.trim(),code=canon($('#regCode').value);
+    const err=$('#regError'),email=$('#regEmail').value.trim(),code=canon($('#regCode').value),wa=phoneNorm($('#regWa').value);
     if(!CODE_RX.test(code)){err.textContent='Kode nggak valid. Salin persis dari pesan admin (contoh: a1b2-c3d4-e5f6).';return}
+    if(!PHONE_RX.test(wa)){err.textContent='Isi nomor WA yang valid, contoh 081234567890.';return}
     err.textContent='Mendaftar…';
     try{
       const {data,error}=await sb.auth.signUp({email,password:code});
       if(error){err.textContent=authErr(error);return}
       if(!data?.session){err.textContent='Akun dibuat, tapi masih butuh konfirmasi email. Hubungi admin.';return}
-      const {data:res,error:e2}=await sb.rpc('kairo_claim',{p_code:code});
+      const {data:res,error:e2}=await sb.rpc('kairo_claim',{p_code:code,p_phone:wa});
       if(e2||res!=='ok'){
         try{await sb.rpc('kairo_cleanup')}catch{}
         await sb.auth.signOut();
@@ -72,7 +75,7 @@
     if(!M.user)return `<p>${where==='site'?'Website ini khusus member Kamar Illiyyin Loro. Masuk atau daftar dulu buat membukanya.':'Circle Chat khusus member. Masuk atau daftar dulu buat baca dan ikut ngobrol.'}</p><div class="pg-btnrow"><button type="button" class="pg-btn" data-g="login">Masuk</button><button type="button" class="pg-btn" data-g="register">Daftar</button></div>`;
     if(!M.profile)return M.admin
       ?`<p>Pilih nama tampilan buat akun admin lu. Nama ini terkunci ke akun.</p><div class="gate-row"><input class="g-name" maxlength="20" placeholder="Nama tampilan" autocomplete="nickname"><button type="button" class="pg-btn" data-g="savename">Simpan</button></div><p class="admin-error" role="alert"></p><button type="button" class="linklike" data-g="out">Keluar</button>`
-      :`<p>Akun ini belum aktif. Masukkan kode pribadi dari admin. Nama lu otomatis terisi dan terkunci.</p><div class="gate-row"><input class="g-code" placeholder="Kode dari admin" autocomplete="off"><button type="button" class="pg-btn" data-g="claim">Aktifkan</button></div><p class="admin-error" role="alert"></p><button type="button" class="linklike" data-g="out">Keluar</button>`;
+      :`<p>Akun ini belum aktif. Masukkan kode pribadi dari admin. Nama lu otomatis terisi dan terkunci.</p><div class="gate-row"><input class="g-code" placeholder="Kode dari admin" autocomplete="off"><input class="g-wa" type="tel" inputmode="tel" placeholder="Nomor WA lu" autocomplete="tel"><button type="button" class="pg-btn" data-g="claim">Aktifkan</button></div><p class="admin-error" role="alert"></p><button type="button" class="linklike" data-g="out">Keluar</button>`;
     return `<p>Akun <b>${esc(M.profile.display_name)}</b> sedang dinonaktifkan oleh admin. Hubungi admin kalau ini keliru.</p><div class="pg-btnrow"><button type="button" class="pg-btn" data-g="check">Cek lagi</button><button type="button" class="linklike" data-g="out">Keluar</button></div>`;
   };
   function render(ok){
@@ -94,9 +97,10 @@
     else if(g==='check')await refresh();
     else if(g==='out')$('#logoutBtn')?.click();
     else if(g==='claim'){
-      const code=canon($('.g-code',box).value);
+      const code=canon($('.g-code',box).value),wa=phoneNorm($('.g-wa',box).value);
       if(!CODE_RX.test(code)){er.textContent='Kode nggak valid. Salin persis dari pesan admin.';return}
-      const {data:res,error}=await sb.rpc('kairo_claim',{p_code:code});
+      if(!PHONE_RX.test(wa)){er.textContent='Isi nomor WA yang valid, contoh 081234567890.';return}
+      const {data:res,error}=await sb.rpc('kairo_claim',{p_code:code,p_phone:wa});
       if(error){er.textContent=errText(error);return}
       if(res!=='ok'){er.textContent=claimMsg(res);return}
       await refresh();
@@ -146,15 +150,14 @@
   /* ---------- panel admin: undangan, akun, pesan ---------- */
   let built=false,invites=[];
   const aroot=$('#memberAdminRoot');
-  const phoneNorm=v=>{let p=String(v||'').replace(/[^0-9]/g,'');if(p.startsWith('0'))p='62'+p.slice(1);else if(p.startsWith('8'))p='62'+p;return p};
   const fmt=iso=>{try{return new Date(iso).toLocaleDateString('id-ID')}catch{return ''}};
   const siteUrl=()=>location.origin+location.pathname;
   const waText=i=>`Halo ${i.display_name}, ini kode akses pribadi lu buat website Kairo Sthana:\n\n${i.code}\n\nCara: buka ${siteUrl()} lalu klik Daftar. Isi email lu dan kode di atas. Nama lu otomatis terisi. Kode ini juga jadi password buat masuk lagi, jadi simpan baik-baik dan jangan dikasih ke orang lain.`;
   function buildAdmin(){
     if(built||!aroot)return;built=true;
     aroot.innerHTML=`<h4 class="pg-admin-h">Undangan member</h4>
-<p class="admin-note">Tempel daftar temen, satu baris per orang: <b>Nama, Nomor WA</b>. Sistem bikin kode unik buat tiap orang. Kodenya dikirim lewat tombol WA, dan temen daftar cuma pakai email dan kode itu. Nomor WA cuma bisa dilihat admin.</p>
-<textarea id="invText" class="inv-text" rows="6" placeholder="Budi Santoso, 081234567890&#10;Siti Aminah, 085712345678"></textarea>
+<p class="admin-note">Tempel daftar temen, satu baris per orang: <b>Nama</b> saja, atau <b>Nama, Nomor WA</b> kalau lu punya. Sistem bikin kode unik buat tiap orang. Temen daftar pakai email, kode, dan nomor WA mereka sendiri. Nomor WA cuma bisa dilihat admin.</p>
+<textarea id="invText" class="inv-text" rows="6" placeholder="Budi Santoso&#10;Siti Aminah, 085712345678"></textarea>
 <div class="pg-btnrow"><button type="button" class="pg-btn" id="invCreate">Buat kode</button><button type="button" class="pg-btn small" id="invCsv">Unduh data (CSV)</button></div>
 <p id="invMsg" class="admin-note" role="status"></p>
 <div class="gate-row"><input id="invSearch" placeholder="Cari nama atau nomor…"></div>
@@ -173,16 +176,16 @@
     const btn=$('#invCreate');btn.disabled=true;
     const jobs=[],failed=[];
     for(const l of lines){
-      const parts=l.split(/[,;\t]/),name=clean(parts[0]),phone=phoneNorm(parts.slice(1).join(''));
+      const parts=l.split(/[,;\t]/),name=clean(parts[0]),raw=parts.slice(1).join('').replace(/[^0-9]/g,''),phone=raw?phoneNorm(raw):'';
       if(!NAME_RX.test(name)){failed.push([l,'nama tidak valid ('+NAME_HINT+')']);continue}
-      if(!/^[0-9]{9,15}$/.test(phone)){failed.push([l,'nomor WA tidak valid']);continue}
+      if(phone&&!PHONE_RX.test(phone)){failed.push([l,'nomor WA tidak valid (kosongkan kalau belum ada)']);continue}
       jobs.push({l,name,phone});
     }
     let done=0,okCount=0;
     const tick=()=>{msg.textContent=`Memproses ${done}/${jobs.length}…`};tick();
     const queue=jobs.slice();
     const worker=async()=>{while(queue.length){const j=queue.shift();
-      const {error}=await sb.rpc('kairo_invite_create',{p_name:j.name,p_phone:j.phone});
+      const {error}=await sb.rpc('kairo_invite_create',{p_name:j.name,p_phone:j.phone||null});
       if(error)failed.push([j.l,errText(error).replace('Nama itu sudah dipakai akun lain. Hubungi admin.','nama sudah ada di daftar atau sudah dipakai akun lain')]);else okCount++;
       done++;tick()}};
     await Promise.all([worker(),worker(),worker()]);
@@ -193,14 +196,14 @@
   }
   function renderInvites(){
     const q=($('#invSearch')?.value||'').toLowerCase().trim(),box=$('#invList');if(!box)return;
-    const rows=invites.filter(i=>!q||i.display_name.toLowerCase().includes(q)||i.phone.includes(q.replace(/[^0-9]/g,'')||'§'));
+    const rows=invites.filter(i=>!q||i.display_name.toLowerCase().includes(q)||(i.phone||'').includes(q.replace(/[^0-9]/g,'')||'§'));
     const claimed=invites.filter(i=>i.user_id).length;
     $('#invH').textContent=`Daftar undangan (${invites.length}, ${claimed} sudah daftar)`;
-    box.innerHTML=rows.length?rows.slice(0,60).map(i=>`<div class="ach-row inv-row" data-id="${esc(i.id)}"><div><b>${esc(i.display_name)}</b>${esc(i.phone)} · ${i.user_id?'sudah daftar':'belum daftar'}<br><code class="inv-code">${esc(i.code)}</code></div><button type="button" class="pg-btn small" data-act="wa">Kirim WA</button><button type="button" class="pg-btn small" data-act="copy">Salin</button><button type="button" class="pg-btn small" data-act="rot">Kode baru</button><button type="button" class="pg-btn small danger" data-act="delinv">Hapus</button></div>`).join('')+(rows.length>60?`<p class="admin-note">${rows.length-60} lainnya disembunyikan, pakai kolom cari.</p>`:''):'<p class="admin-note">Belum ada undangan.</p>';
+    box.innerHTML=rows.length?rows.slice(0,60).map(i=>`<div class="ach-row inv-row" data-id="${esc(i.id)}"><div><b>${esc(i.display_name)}</b>${i.phone?esc(i.phone):'belum ada nomor'} · ${i.user_id?'sudah daftar':'belum daftar'}<br><code class="inv-code">${esc(i.code)}</code></div>${i.phone?'<button type="button" class="pg-btn small" data-act="wa">Kirim WA</button>':''}<button type="button" class="pg-btn small" data-act="msg">Salin pesan</button><button type="button" class="pg-btn small" data-act="copy">Salin kode</button><button type="button" class="pg-btn small" data-act="rot">Kode baru</button><button type="button" class="pg-btn small danger" data-act="delinv">Hapus</button></div>`).join('')+(rows.length>60?`<p class="admin-note">${rows.length-60} lainnya disembunyikan, pakai kolom cari.</p>`:''):'<p class="admin-note">Belum ada undangan.</p>';
   }
   function downloadCsv(){
     const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
-    const csv='\ufeff'+['Nama,WA,Kode,Status,Dibuat'].concat(invites.map(i=>[i.display_name,i.phone,i.code,i.user_id?'sudah daftar':'belum daftar',fmt(i.created_at)].map(q).join(','))).join('\n');
+    const csv='\ufeff'+['Nama,WA,Kode,Status,Dibuat'].concat(invites.map(i=>[i.display_name,i.phone||'',i.code,i.user_id?'sudah daftar':'belum daftar',fmt(i.created_at)].map(q).join(','))).join('\n');
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='undangan-kairo.csv';a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href),500);
   }
@@ -223,7 +226,8 @@
     const b=e.target.closest?.('[data-act]');if(!b)return;
     const id=b.closest('.ach-row')?.dataset.id;if(!id)return;
     const act=b.dataset.act,inv=invites.find(i=>i.id===id);
-    if(act==='wa'&&inv){window.open('https://wa.me/'+inv.phone+'?text='+encodeURIComponent(waText(inv)),'_blank','noopener');return}
+    if(act==='msg'&&inv){try{await navigator.clipboard.writeText(waText(inv));b.textContent='Tersalin'}catch{prompt('Salin pesan ini:',waText(inv))}return}
+    if(act==='wa'&&inv&&inv.phone){window.open('https://wa.me/'+inv.phone+'?text='+encodeURIComponent(waText(inv)),'_blank','noopener');return}
     if(act==='copy'&&inv){try{await navigator.clipboard.writeText(inv.code);b.textContent='Tersalin'}catch{prompt('Salin kode ini:',inv.code)}return}
     let res;
     if(act==='rot'&&inv){
